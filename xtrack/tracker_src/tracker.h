@@ -28,6 +28,22 @@ void global_aperture_check(LocalParticle* part0){
 #endif
 
 /*gpufun*/
+int check_delayed_start(LocalParticle* part0, int64_t ee){
+
+    //start_per_particle_block (part0->part)
+        int64_t part_at_ele = LocalParticle_get_at_element(&lpart);
+        if (part_at_ele < 0){
+            if (part_at_ele == (-ee)){
+                LocalParticle_set_at_element(&lpart, ee);
+            }
+            else{
+                skip_element = 1;
+            }
+        }
+    //end_per_particle_block
+}
+
+/*gpufun*/
 void increment_at_element(LocalParticle* part0){
 
    //start_per_particle_block (part0->part)
