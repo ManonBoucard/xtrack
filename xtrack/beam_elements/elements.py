@@ -104,7 +104,8 @@ class Elens(BeamElement):
                'voltage':      xo.Float64,
                'residual_kick_x': xo.Float64,
                'residual_kick_y': xo.Float64,
-               'coefficients_polynomial' : xo.Float64,
+               'polynomial_order': xo.Float64,
+               'coefficients_polynomial' : xo.Float64[:],
               }
 
     def __init__(self,  inner_radius  = None,
@@ -114,6 +115,7 @@ class Elens(BeamElement):
                         voltage       = None,
                         residual_kick_x = 0,
                         residual_kick_y = 0,
+                        polynomial_order = None,
                         coefficients_polynomial = None,
                         **kwargs):
         super().__init__(**kwargs)
@@ -124,6 +126,7 @@ class Elens(BeamElement):
         self.voltage         = voltage
         self.residual_kick_x   = residual_kick_x
         self.residual_kick_y   = residual_kick_y
+        self.polynomial_order = polynomial_order
         self.coefficients_polynomial = coefficients_polynomial
 
     def get_backtrack_element(self, _context=None, _buffer=None, _offset=None):
@@ -133,6 +136,7 @@ class Elens(BeamElement):
                               outer_radius=self.outer_radius,
                               elens_length=-self.elens_length,
                               voltage=self.voltage,
+                              polynomial_order = self.polynomial_order,
                               coefficients_polynomial=self.coefficients_polynomial,
                               _context=_context, _buffer=_buffer, _offset=_offset)
 
