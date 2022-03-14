@@ -109,7 +109,7 @@ class Elens(BeamElement):
     def __init__(self,  inner_radius  = None,
                         outer_radius  = None,
                         current       = None,
-                        elens_length  = None
+                        elens_length  = None,
                         voltage       = None,
                         residual_kick_x = 0,
                         residual_kick_y = 0,
