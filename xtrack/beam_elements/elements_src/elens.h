@@ -94,7 +94,7 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
         else
         {
   // frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
-          frr = coefficients_polynomial + coefficient_polynomial*r;
+          frr = coefficents_polynomial + coefficents_polynomial*r;
         }
 
 
