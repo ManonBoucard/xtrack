@@ -11,7 +11,7 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
     double const voltage = ElensData_get_voltage(el);
     double const residual_kick_x = ElensData_get_residual_kick_x(el);
     double const residual_kick_y = ElensData_get_residual_kick_y(el);
-
+    double const coefficents_polynomial[2] = ElensData_get_coefficients_polynomial(el);
 
     // double const cos_z = SRotationData_get_cos_z(el);
 
@@ -93,7 +93,8 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
         }
         else
         {
-          frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+  // frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+          frr = coefficients_polynomial[0]+ coefficient_polynomial[1]*r;
         }
 
 
