@@ -104,7 +104,7 @@ class Elens(BeamElement):
                'voltage':      xo.Float64,
                'residual_kick_x': xo.Float64,
                'residual_kick_y': xo.Float64,
-               'coefficients_polynomial' : xo.Float64[:]
+               'coefficients_polynomial' : xo.Float64,
               }
 
     def __init__(self,  inner_radius  = None,
