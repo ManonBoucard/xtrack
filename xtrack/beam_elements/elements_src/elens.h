@@ -11,9 +11,13 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
     double const voltage = ElensData_get_voltage(el);
     double const residual_kick_x = ElensData_get_residual_kick_x(el);
     double const residual_kick_y = ElensData_get_residual_kick_y(el);
-    double const polynomial_order = ElensData_get_polynomial_order(el);
-    double coefficents_polynomial = ElensData_get_coefficients_polynomial(el, polynomial_order);
+    long int const polynomial_order = ElensData_get_polynomial_order(el);
+    double* coefficients_polynomial = (double*)malloc(polynomial_order*sizeof(double));
 
+
+    for(int i=0; i<polynomial_order; ++i){
+      coefficents_polynomial[i] = ElensData_get_coefficients_polynomial(el, i);
+    }
     // double const cos_z = SRotationData_get_cos_z(el);
 
     //start_per_particle_block (part0->part)
@@ -95,7 +99,7 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
         else
         {
   // frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
-          frr = coefficents_polynomial + coefficents_polynomial*r;
+          frr = coefficents_polynomial[0] + coefficents_polynomial[1]*r;
         }
 
 
@@ -145,6 +149,10 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
 
         // LocalParticle_set_py(part, py_hat);
     //end_per_particle_block
+
+
+	// free allocated memory for local copy of coefficient
+	free((void*)coefficients_polynomial);
 }
 
 #endif
