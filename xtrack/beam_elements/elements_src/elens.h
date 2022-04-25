@@ -11,6 +11,17 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
     double const voltage = ElensData_get_voltage(el);
     double const residual_kick_x = ElensData_get_residual_kick_x(el);
     double const residual_kick_y = ElensData_get_residual_kick_y(el);
+    //double coefficients_polynomial = ElensData_get_coefficients_polynomial(el,0);
+    int const polynomial_order = ElensData_get_polynomial_order(el);
+    //order of the polynomial
+    //int const order = 13;
+    //create a free space for the array with the coefficients of the polynomial
+    double* coefficients_polynomial = (double*)malloc((polynomial_order+1)*sizeof(double));
+    //loop to fill the array with the coefficients of the polynomial
+    for(int i=0; i<(polynomial_order+1); ++i){
+        coefficients_polynomial[i] = ElensData_get_coefficients_polynomial(el, i);
+    }
+    
 
 
     // double const cos_z = SRotationData_get_cos_z(el);
@@ -92,8 +103,21 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
           frr = 1.;
         }
         else
-        {
-          frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+        {   
+            //case when there are no coefficients and we want to use constant profil
+        
+          if (polynomial_order == 0)
+          {
+            frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+            }
+            //case with the coefficients of the polynomial with the measured profil
+          else 
+          {
+            frr= 0;
+            for(int i=0; i<(polynomial_order+1); ++i){
+                frr += coefficients_polynomial[i]*pow(r*1e3,polynomial_order-i);
+            }
+          }
         }
 
 
@@ -133,7 +157,6 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
           dpy = residual_kick_y;
         }
 
-
         LocalParticle_add_to_px(part, dpx );
         LocalParticle_add_to_py(part, dpy );
 
@@ -143,6 +166,12 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
 
         // LocalParticle_set_py(part, py_hat);
     //end_per_particle_block
+    
+    // free allocated memory for local copy of coefficient
+        free((void*)coefficients_polynomial);
+    
+    
+    
 }
 
 #endif
