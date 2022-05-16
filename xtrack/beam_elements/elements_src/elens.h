@@ -11,7 +11,7 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
     double const voltage = ElensData_get_voltage(el);
     double const residual_kick_x = ElensData_get_residual_kick_x(el);
     double const residual_kick_y = ElensData_get_residual_kick_y(el);
-
+    int const polynomial_order = ElensData_get_polynomial_order(el);
 
     // double const cos_z = SRotationData_get_cos_z(el);
 
