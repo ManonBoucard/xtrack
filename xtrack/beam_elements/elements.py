@@ -142,6 +142,7 @@ class Elens(BeamElement):
                               outer_radius=self.outer_radius,
                               elens_length=-self.elens_length,
                               voltage=self.voltage,
+                              coefficients_polynomial = self.coefficients_polynomial
                               _context=_context, _buffer=_buffer, _offset=_offset)
 
 Elens.XoStruct.extra_sources = [
