@@ -104,7 +104,8 @@ class Elens(BeamElement):
                'elens_length': xo.Float64,
                'voltage':      xo.Float64,
                'residual_kick_x': xo.Float64,
-               'residual_kick_y': xo.Float64
+               'residual_kick_y': xo.Float64,
+               'coefficients_polynomial': xo.Float64[:]
               }
 
     def __init__(self,  inner_radius = 1.,
@@ -114,8 +115,11 @@ class Elens(BeamElement):
                         voltage      = 0.,
                         residual_kick_x = 0,
                         residual_kick_y = 0,
+                        coefficients_polynomial = [0],
                         _xobject = None,
                         **kwargs):
+        kwargs["coefficients_polynomial"] = len(coefficients_polynomial)
+
         if _xobject is not None:
             super().__init__(_xobject=_xobject)
         else:
