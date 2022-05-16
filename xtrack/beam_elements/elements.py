@@ -132,6 +132,9 @@ class Elens(BeamElement):
             self.residual_kick_x   = residual_kick_x
             self.residual_kick_y   = residual_kick_y
 
+            ctx = self._buffer.context
+            self.coefficients_polynomial[:] = ctx.nparray_to_context_array(coefficients_polynomial)
+
     def get_backtrack_element(self, _context=None, _buffer=None, _offset=None):
         return self.__class__(
                               current=self.current,
