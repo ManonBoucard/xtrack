@@ -96,7 +96,19 @@ void Elens_track_local_particle(ElensData el, LocalParticle* part0){
         }
         else
         {
-          frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+           if (polynomial_order ==0)
+  	    { 
+              frr = ((r*r - r1*r1)/(r2*r2 - r1*r1));
+             }
+	   else 
+	     { 
+	      frr = 0;
+	      for(int i=0; i<(polynomial_order+1); ++i){
+                 frr += coefficients_polynomial[i]*pow((double)(r*1e3), (double)(polynomial_order-i));
+	       }
+
+	      }
+
         }
 
 
